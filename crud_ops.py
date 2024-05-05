@@ -61,11 +61,12 @@ def delete_book(book_id):
 # fetch json data and parse
 @app.route('/books/fetch_data_json', methods=['GET'])
 def fetch_data():
-    url = 'https://api.publicapis.org/entries'
+    url = 'https://dummyjson.com/products'
     response = requests.get(url)
     if response.ok:
         json_response = response.json()
-        return {'Response Captured':'True','Api':json_response['entries'][0]['API'], 'Link':json_response['entries'][0]['Link']}
+        print(json_response)
+        return {'Response Captured':'True','Product':json_response['products'][0]['description'], 'Description':json_response['products'][1]['description']}
 
     else:
         print("Invalid request")
@@ -78,7 +79,8 @@ def fetch_data_xml():
     response = requests.get(url)
     if response.ok:
         xml_data = BeautifulSoup(response.content, 'lxml')
-        xml_tag = xml_data.find('heading')
+        print(xml_data)
+        xml_tag = xml_data.find('body')
         return str(xml_tag)
 
     else:
